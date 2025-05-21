@@ -1,6 +1,0 @@
-@lugiatrack_api_HostAddress = http://localhost:5123
-
-GET {{lugiatrack_api_HostAddress}}/weatherforecast/
-Accept: application/json
-
-###
