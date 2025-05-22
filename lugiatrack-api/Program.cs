@@ -16,6 +16,9 @@ var app = builder.Build();
 app.UseSwagger();
 app.UseSwaggerUI();
 
+app.MapGet("/", () => "Lugia Track API").ExcludeFromDescription();
+   
+
 // Endpoints Funcionarios
 
 // GET todos os funcionários (com paginação)
@@ -66,6 +69,32 @@ app.MapGet("/funcionarios/{id}", async (int id, OracleDbContext db) =>
     );
 
     return Results.Ok(dto); 
+}).WithTags("Funcionarios");
+
+// POST login
+app.MapPost("/funcionarios/login", async (LoginRequestDto login, OracleDbContext db) =>
+{
+    if (!LoginValidator.CamposPreenchidos(login.Email, login.Senha))
+        return Results.BadRequest("Email e senha são obrigatórios.");
+
+    if (!LoginValidator.EmailValido(login.Email))
+        return Results.BadRequest("Formato de email inválido.");
+
+    var funcionario = await db.Funcionarios
+        .FirstOrDefaultAsync(f => f.Email == login.Email && f.Senha == login.Senha);
+
+    if (funcionario is null)
+        return Results.Json(new { error = "Email ou senha incorretos" }, statusCode: StatusCodes.Status401Unauthorized);
+
+    var dto = new FuncionarioReadDto(
+        funcionario.IdFuncionario,
+        funcionario.Nome,
+        funcionario.Email,
+        funcionario.Cpf,
+        funcionario.Cargo
+    );
+
+    return Results.Ok(dto);
 }).WithTags("Funcionarios");
 
 // POST (adicionar funcionário)
