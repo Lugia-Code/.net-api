@@ -17,6 +17,6 @@ public class OracleDbContext : DbContext
                            "Data Source=//oracle.fiap.com.br:1521/orcl;User Id=rm554854; Password=090304;";
     }
     
-    protected override void OnConfiguring(DbContextOptionsBuilder options) =>
-        options.UseOracle(ConnectionString);
+    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder) =>
+        optionsBuilder.UseOracle(ConnectionString);
 }
