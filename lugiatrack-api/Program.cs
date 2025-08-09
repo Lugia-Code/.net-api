@@ -17,7 +17,8 @@ app.UseSwagger();
 app.UseSwaggerUI();
 
 app.MapGet("/", () => "Lugia Track API").ExcludeFromDescription();
-   
+
+const string Funcionarios = "Funcionarios";
 
 // Endpoints Funcionarios
 
@@ -48,7 +49,7 @@ app.MapGet("/funcionarios", async (OracleDbContext db, int page = 1, int pageSiz
         Total = total,
         Items = funcionarios
     });
-}).WithTags("Funcionarios");
+}).WithTags(Funcionarios);
 
 // GET funcionário por ID
 app.MapGet("/funcionarios/{id}", async (int id, OracleDbContext db) =>
@@ -69,7 +70,7 @@ app.MapGet("/funcionarios/{id}", async (int id, OracleDbContext db) =>
     );
 
     return Results.Ok(dto); 
-}).WithTags("Funcionarios");
+}).WithTags(Funcionarios);
 
 // POST login
 app.MapPost("/funcionarios/login", async (LoginRequestDto login, OracleDbContext db) =>
@@ -95,7 +96,7 @@ app.MapPost("/funcionarios/login", async (LoginRequestDto login, OracleDbContext
     );
 
     return Results.Ok(dto);
-}).WithTags("Funcionarios");
+}).WithTags(Funcionarios);
 
 // POST (adicionar funcionário)
 app.MapPost("/funcionarios", async (FuncionarioCreateDto dto, OracleDbContext db) =>
@@ -137,7 +138,7 @@ app.MapPost("/funcionarios", async (FuncionarioCreateDto dto, OracleDbContext db
     );
 
     return Results.Created($"/funcionarios/{funcionario.IdFuncionario}", readDto);
-}).WithTags("Funcionarios");
+}).WithTags(Funcionarios);
 
 // PUT (atualizar funcionário)
 app.MapPut("/funcionarios/{id}", async (int id, FuncionarioUpdateDto dto, OracleDbContext db) =>
@@ -165,7 +166,7 @@ app.MapPut("/funcionarios/{id}", async (int id, FuncionarioUpdateDto dto, Oracle
 
     await db.SaveChangesAsync();
     return Results.NoContent();
-}).WithTags("Funcionarios");
+}).WithTags(Funcionarios);
 
 // DELETE
 app.MapDelete("/funcionarios/{id}", async (int id, OracleDbContext db) =>
@@ -180,7 +181,7 @@ app.MapDelete("/funcionarios/{id}", async (int id, OracleDbContext db) =>
     db.Funcionarios.Remove(funcionario);
     await db.SaveChangesAsync();
     return Results.NoContent(); 
-}).WithTags("Funcionarios");
+}).WithTags(Funcionarios);
 
 // Endpoints Motos
 
