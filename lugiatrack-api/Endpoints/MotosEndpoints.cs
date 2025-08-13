@@ -8,13 +8,14 @@ namespace lugiatrack_api.Endpoints
 {
     public static class MotosEndpoints
     {
+        private const string MOTOS = "Motos";
         public static void MapMotosEndpoints(this WebApplication app)
         {
-            app.MapGet("/motos", GetMotos).WithTags("Motos");
-            app.MapGet("/motos/buscar", GetMoto).WithTags("Motos");
-            app.MapPost("/motos", CreateMoto).WithTags("Motos");
-            app.MapPut("/motos/{chassi}/{placa}", UpdateMoto).WithTags("Motos");
-            app.MapDelete("/motos", DeleteMoto).WithTags("Motos");
+            app.MapGet("/motos", GetMotos).WithTags(MOTOS);
+            app.MapGet("/motos/buscar", GetMoto).WithTags(MOTOS);
+            app.MapPost("/motos", CreateMoto).WithTags(MOTOS);
+            app.MapPut("/motos/{chassi}/{placa}", UpdateMoto).WithTags(MOTOS);
+            app.MapDelete("/motos", DeleteMoto).WithTags(MOTOS);
         }
 
         private static async Task<IResult> GetMotos(OracleDbContext db, int page = 1, int pageSize = 10)
